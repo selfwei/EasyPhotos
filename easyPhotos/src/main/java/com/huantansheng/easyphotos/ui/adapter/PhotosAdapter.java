@@ -200,6 +200,18 @@ public class PhotosAdapter extends RecyclerView.Adapter {
         }
     }
 
+    public ArrayList<Photo> getPhotoList() {
+        int size = dataList.size();
+        ArrayList<Photo> photos =new ArrayList<>();
+        for(int i=0;i<size;i++){
+            if(dataList.get(i) instanceof Photo){
+                final Photo photo = (Photo) dataList.get(i);
+                photos.add(photo);
+            }
+        }
+        return photos;
+    }
+
     public void clearAd() {
         clearAd = true;
         notifyDataSetChanged();

@@ -59,6 +59,13 @@ public class Result {
         return ADD_SUCCESS;
     }
 
+    public static void addAllPhoto(ArrayList<Photo> photos){
+        int size = photos.size();
+        for (int i = 0; i < size; i++) {
+            addPhoto(photos.get(i));
+        }
+    }
+
     public static void removePhoto(Photo photo) {
         photo.selected = false;
         photos.remove(photo);

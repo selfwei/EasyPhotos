@@ -18,7 +18,7 @@
         <View
             android:id="@+id/m_tool_bar"
             android:layout_width="0dp"
-            android:layout_height="@dimen/toolbar_size_easy_photos"
+            android:layout_height="60dp"
             android:background="@color/easy_photos_bar_primary"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -118,12 +118,25 @@
                 android:padding="8dp"
                 android:text="@string/empty_easy_photos"
                 android:textColor="@color/easy_photos_fg_primary" />
+
+            <TextView
+                android:id="@+id/tv_add_all"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_second_level_menu_easy_photos"
+                android:gravity="center"
+                android:minWidth="80dp"
+                android:padding="8dp"
+                android:text="全选"
+                android:textColor="@color/easy_photos_fg_primary" />
         </LinearLayout>
 
         <View
             android:id="@+id/m_bottom_bar"
             android:layout_width="0dp"
-            android:layout_height="42dp"
+            android:layout_height="60dp"
             android:background="@color/easy_photos_bar_primary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -139,8 +152,9 @@
             android:paddingLeft="16dp"
             android:paddingEnd="6dp"
             android:paddingRight="6dp"
+            android:textSize="24dp"
             android:text="@string/selector_folder_all_easy_photos"
-            android:textColor="@color/easy_photos_fg_primary"
+            android:textColor="@color/home_text"
             app:layout_constraintBottom_toBottomOf="@+id/m_bottom_bar"
             app:layout_constraintLeft_toLeftOf="@+id/m_bottom_bar"
             app:layout_constraintTop_toTopOf="@+id/m_bottom_bar" />
@@ -178,7 +192,8 @@
             android:paddingEnd="16dp"
             android:paddingRight="16dp"
             android:text="@string/selector_preview_easy_photos"
-            android:textColor="@color/easy_photos_fg_primary"
+            android:textSize="24dp"
+            android:textColor="@color/home_text"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@+id/m_bottom_bar"
             app:layout_constraintRight_toRightOf="parent"
@@ -204,13 +219,14 @@
 
         <ImageView
             android:id="@+id/iv_back"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
-            android:padding="10dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/back"
+            android:scaleType="centerInside"
             app:layout_constraintBottom_toBottomOf="@+id/m_tool_bar"
             app:layout_constraintLeft_toLeftOf="@+id/m_tool_bar"
-            app:layout_constraintTop_toTopOf="@+id/m_tool_bar"
-            app:srcCompat="@drawable/ic_arrow_back_easy_photos" />
+            app:layout_constraintTop_toTopOf="@+id/m_tool_bar" />
 
         <TextView
             android:id="@+id/tv_title"
@@ -220,7 +236,8 @@
             android:layout_marginLeft="16dp"
             android:gravity="center"
             android:text="@string/picture_selection_easy_photos"
-            android:textColor="@color/easy_photos_fg_primary"
+            android:textColor="@color/home_text"
+            android:textSize="28dp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="@+id/m_tool_bar"
             app:layout_constraintLeft_toLeftOf="@+id/m_back_line"
@@ -232,11 +249,11 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:background="@drawable/bg_menu_done_easy_photos"
+            android:background="@drawable/dialog_confirm_btn_bg"
             android:gravity="center"
             android:padding="6dp"
-            android:textColor="@color/menu_text_easy_photos"
-            android:textSize="12sp"
+            android:textColor="@color/white"
+            android:textSize="22dp"
             android:textStyle="bold"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@+id/m_tool_bar"

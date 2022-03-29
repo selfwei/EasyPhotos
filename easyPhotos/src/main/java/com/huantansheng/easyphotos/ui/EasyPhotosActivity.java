@@ -746,7 +746,7 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
 
         initAlbumItems();
         shouldShowMenuDone();
-        setClick(R.id.iv_album_items, R.id.tv_clear, R.id.iv_second_menu, R.id.tv_puzzle);
+        setClick(R.id.iv_album_items, R.id.tv_clear, R.id.iv_second_menu, R.id.tv_puzzle,R.id.tv_add_all);
         setClick(tvAlbumItems, rootViewAlbumItems, tvDone, tvOriginal, tvPreview, ivCamera);
 
     }
@@ -796,7 +796,17 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
             photosAdapter.change();
             shouldShowMenuDone();
             processSecondMenu();
-        } else if (R.id.tv_original == id) {
+        } else if (R.id.tv_add_all == id) {
+            if (Result.isEmpty()) {
+                processSecondMenu();
+                return;
+            }
+
+            Result.addAllPhoto(photosAdapter.getPhotoList());
+            photosAdapter.change();
+            shouldShowMenuDone();
+            processSecondMenu();
+        }else if (R.id.tv_original == id) {
             if (!Setting.originalMenuUsable) {
                 Toast.makeText(getApplicationContext(), Setting.originalMenuUnusableHint, Toast.LENGTH_SHORT).show();
                 return;
