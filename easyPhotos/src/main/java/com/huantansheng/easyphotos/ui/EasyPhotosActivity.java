@@ -797,11 +797,7 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
             shouldShowMenuDone();
             processSecondMenu();
         } else if (R.id.tv_add_all == id) {
-            if (Result.isEmpty()) {
-                processSecondMenu();
-                return;
-            }
-
+            Result.removeAll();
             Result.addAllPhoto(photosAdapter.getPhotoList());
             photosAdapter.change();
             shouldShowMenuDone();
