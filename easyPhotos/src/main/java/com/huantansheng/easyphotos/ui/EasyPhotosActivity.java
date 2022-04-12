@@ -184,7 +184,8 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
             tvTitle.setText(R.string.video_selection_easy_photos);
         }
         findViewById(R.id.iv_second_menu).setVisibility(Setting.showPuzzleMenu || Setting.showCleanMenu || Setting.showOriginalMenu ? View.VISIBLE : View.GONE);
-        setClick(R.id.iv_back);
+        findViewById(R.id.iv_text_menu).setVisibility(Setting.showPuzzleMenu || Setting.showCleanMenu || Setting.showOriginalMenu ? View.VISIBLE : View.GONE);
+        setClick(R.id.iv_back,R.id.tv_title);
     }
 
     private void hasPermissions() {
@@ -719,6 +720,7 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
             if (Setting.hasPhotosAd()) index = 1;
             photoList.add(index, null);
         }
+        Log.i("BYZ","photoList:"+photoList.size());
         photosAdapter = new PhotosAdapter(this, photoList, this);
 
         gridLayoutManager = new GridLayoutManager(this, columns);
@@ -746,7 +748,7 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
 
         initAlbumItems();
         shouldShowMenuDone();
-        setClick(R.id.iv_album_items, R.id.tv_clear, R.id.iv_second_menu, R.id.tv_puzzle,R.id.tv_add_all);
+        setClick(R.id.iv_album_items, R.id.tv_clear, R.id.iv_second_menu, R.id.tv_puzzle,R.id.tv_add_all,R.id.iv_text_menu);
         setClick(tvAlbumItems, rootViewAlbumItems, tvDone, tvOriginal, tvPreview, ivCamera);
 
     }
@@ -783,7 +785,7 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
             showAlbumItems(View.GONE == rootViewAlbumItems.getVisibility());
         } else if (R.id.root_view_album_items == id) {
             showAlbumItems(false);
-        } else if (R.id.iv_back == id) {
+        } else if (R.id.iv_back == id || R.id.tv_title == id) {
             onBackPressed();
         } else if (R.id.tv_done == id) {
             done();
@@ -814,7 +816,7 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
             PreviewActivity.start(EasyPhotosActivity.this, -1, 0);
         } else if (R.id.fab_camera == id) {
             launchCamera(Code.REQUEST_CAMERA);
-        } else if (R.id.iv_second_menu == id) {
+        } else if (R.id.iv_second_menu == id || R.id.iv_text_menu == id) {
             processSecondMenu();
         } else if (R.id.tv_puzzle == id) {
             processSecondMenu();

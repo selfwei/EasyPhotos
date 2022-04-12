@@ -18,7 +18,7 @@
         <View
             android:id="@+id/m_tool_bar"
             android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_height="90dp"
             android:background="@color/easy_photos_bar_primary"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -79,64 +79,68 @@
             <TextView
                 android:id="@+id/tv_original"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:layout_margin="8dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_second_level_menu_easy_photos"
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center"
-                android:minWidth="80dp"
+                android:minWidth="140dp"
                 android:padding="8dp"
                 android:text="@string/original_easy_photos"
+                android:textSize="30sp"
                 android:textColor="@color/easy_photos_fg_primary" />
 
             <TextView
                 android:id="@+id/tv_puzzle"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:layout_margin="8dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_second_level_menu_easy_photos"
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center"
-                android:minWidth="80dp"
+                android:minWidth="140dp"
                 android:padding="8dp"
+                android:textSize="30sp"
                 android:text="@string/puzzle_easy_photos"
                 android:textColor="@color/easy_photos_fg_primary" />
 
             <TextView
                 android:id="@+id/tv_clear"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:layout_margin="8dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_second_level_menu_easy_photos"
                 android:gravity="center"
-                android:minWidth="80dp"
+                android:minWidth="140dp"
                 android:padding="8dp"
                 android:text="@string/empty_easy_photos"
+                android:textSize="30sp"
                 android:textColor="@color/easy_photos_fg_primary" />
 
             <TextView
                 android:id="@+id/tv_add_all"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:layout_margin="8dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_second_level_menu_easy_photos"
                 android:gravity="center"
-                android:minWidth="80dp"
+                android:minWidth="140dp"
                 android:padding="8dp"
                 android:text="全选"
+                android:textSize="30sp"
                 android:textColor="@color/easy_photos_fg_primary" />
         </LinearLayout>
 
         <View
             android:id="@+id/m_bottom_bar"
             android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_height="90dp"
             android:background="@color/easy_photos_bar_primary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -171,7 +175,7 @@
 
         <ImageView
             android:id="@+id/iv_second_menu"
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="0dp"
             android:padding="13dp"
             app:layout_constraintBottom_toBottomOf="@+id/m_bottom_bar"
@@ -179,6 +183,20 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@+id/m_bottom_bar"
             app:srcCompat="@drawable/ic_edit_easy_photos" />
+
+        <TextView
+            android:id="@+id/iv_text_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:padding="2dp"
+            android:textSize="30sp"
+            android:gravity="start|center_vertical"
+            android:textColor="@color/easy_photos_fg_primary"
+            app:layout_constraintBottom_toBottomOf="@+id/m_bottom_bar"
+            app:layout_constraintLeft_toRightOf="@+id/iv_second_menu"
+
+            android:text="多媒体操作"
+            app:layout_constraintTop_toTopOf="@+id/m_bottom_bar" />
 
         <com.huantansheng.easyphotos.ui.widget.PressedTextView
             android:id="@+id/tv_preview"
