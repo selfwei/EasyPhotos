@@ -80,10 +80,12 @@ public class AlbumModel {
     }
 
     public void stopQuery() {
+        Log.i("BYZ","stopQuery");
         canRun = false;
     }
 
     private synchronized void initAlbum(Context context) {
+        Log.i("BYZ","initAlbum 1");
         album.clear();
 //        long now = System.currentTimeMillis();
         if (Setting.selectedPhotos.size() > Setting.count) {
@@ -150,8 +152,12 @@ public class AlbumModel {
 
         Cursor cursor = contentResolver.query(contentUri, projections, selection,
                 selectionAllArgs, sortOrder);
+        if(cursor!=null && cursor.moveToFirst()){
+            Log.i("BYZ","cursor:"+cursor.getCount());
+        }
+
         if (cursor == null) {
-//            Log.d(TAG, "call: " + "Empty photos");
+            Log.d("BYZ", "call: " + "Empty photos");
         } else if (cursor.moveToFirst()) {
             String albumItem_all_name = getAllAlbumName(context);
             String albumItem_video_name =
