@@ -748,13 +748,16 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
             @Override
             public void onSelectChange(int start, int end, boolean isSelected) {
                 //选择的范围回调
+                Log.i("BYZ","onSelectChange");
                 photosAdapter.selectRangeChange(start, end, isSelected);
             }
         });
         photosAdapter.setLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
+                Log.i("BYZ","onLongClick start");
                 int position = rvPhotos.getChildAdapterPosition(v);
+                Log.i("BYZ","onLongClick:"+position);
                 photosAdapter.setSelected(position, true);
                 touchListener.setStartSelectPosition(position);
                 return false;
