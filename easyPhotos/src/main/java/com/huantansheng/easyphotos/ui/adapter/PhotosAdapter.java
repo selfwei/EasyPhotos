@@ -42,6 +42,9 @@ public class PhotosAdapter extends RecyclerView.Adapter {
 
     private boolean clearAd = false;
 
+    private View.OnLongClickListener longClickListener;
+    private View.OnClickListener clickListener;
+
 
     public PhotosAdapter(Context cxt, ArrayList<Object> dataList, OnClickListener listener) {
         this.dataList = dataList;
@@ -65,7 +68,10 @@ public class PhotosAdapter extends RecyclerView.Adapter {
             case TYPE_CAMERA:
                 return new CameraViewHolder(mInflater.inflate(R.layout.item_camera_easy_photos, parent, false));
             default:
-                return new PhotoViewHolder(mInflater.inflate(R.layout.item_rv_photos_easy_photos, parent, false));
+                View view = mInflater.inflate(R.layout.item_rv_photos_easy_photos, parent, false);
+                view.setOnLongClickListener(longClickListener);
+                view.setOnClickListener(clickListener);
+                return new PhotoViewHolder(view);
         }
     }
 
@@ -198,6 +204,93 @@ public class PhotosAdapter extends RecyclerView.Adapter {
                 }
             });
         }
+    }
+
+    public void setLongClickListener(View.OnLongClickListener clickListener) {
+        this.longClickListener = clickListener;
+    }
+
+    public void setClickListener(View.OnClickListener clickListener) {
+        this.clickListener = clickListener;
+    }
+
+    public void selectRangeChange(int start, int end, boolean isSelected) {
+        if (start < 0 || end >= dataList.size()) {
+            return;
+        }
+        if (isSelected) {
+            dataSelect(start, end);
+        } else {
+            dataUnselect(start, end);
+        }
+    }
+
+    private void dataSelect(int start, int end) {
+        for (int i = start; i <= end; i++) {
+            Photo model = getPhotoList().get(i);
+            if (!model.selected) {
+                setSelected(i,true);
+                notifyItemChanged(i);
+            }
+        }
+    }
+
+    private void dataUnselect(int start, int end) {
+        for (int i = start; i <= end; i++) {
+            Photo model = getPhotoList().get(i);
+            if (model.selected) {
+                setSelected(i,false);
+                notifyItemChanged(i);
+            }
+        }
+    }
+
+    public void setSelected(int position, boolean selected) {
+//        if (dataList.get(position).selected != selected) {
+//            dataList.get(position).selected = selected;
+//            notifyItemChanged(position);
+//        }
+         Photo item = getPhotoList().get(position);
+
+        if (isSingle) {
+            singleSelector(item, p);
+            return;
+        }
+        if (unable) {
+            if (item.selected) {
+                Result.removePhoto(item);
+                if (unable) {
+                    unable = false;
+                }
+                listener.onSelectorChanged();
+                notifyDataSetChanged();
+                return;
+            }
+            listener.onSelectorOutOfMax(null);
+            return;
+        }
+        item.selected = !item.selected;
+        if (item.selected) {
+            int res = Result.addPhoto(item);
+            if (res != 0) {
+                listener.onSelectorOutOfMax(res);
+                item.selected = false;
+                return;
+            }
+            ((PhotoViewHolder) holder).tvSelector.setBackgroundResource(R.drawable.bg_select_true_easy_photos);
+            ((PhotoViewHolder) holder).tvSelector.setText(String.valueOf(Result.count()));
+            if (Result.count() == Setting.count) {
+                unable = true;
+                notifyDataSetChanged();
+            }
+        } else {
+            Result.removePhoto(item);
+            if (unable) {
+                unable = false;
+            }
+            notifyDataSetChanged();
+        }
+        listener.onSelectorChanged();
     }
 
     public ArrayList<Photo> getPhotoList() {

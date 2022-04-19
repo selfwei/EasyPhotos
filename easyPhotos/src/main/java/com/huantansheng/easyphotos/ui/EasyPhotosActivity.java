@@ -108,6 +108,7 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
     private RelativeLayout permissionView;
     private TextView tvPermission;
     private View mBottomBar;
+    private DragSelectTouchListener touchListener;
 
     private boolean isQ = false;
 
@@ -738,6 +739,26 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
         }
         rvPhotos.setLayoutManager(gridLayoutManager);
         rvPhotos.setAdapter(photosAdapter);
+        touchListener = new DragSelectTouchListener();
+        //监听滑动选择
+        rvPhotos.addOnItemTouchListener(touchListener);
+
+        touchListener.setSelectListener(new DragSelectTouchListener.onSelectListener() {
+            @Override
+            public void onSelectChange(int start, int end, boolean isSelected) {
+                //选择的范围回调
+                photosAdapter.selectRangeChange(start, end, isSelected);
+            }
+        });
+        photosAdapter.setLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                int position = rvPhotos.getChildAdapterPosition(v);
+                photosAdapter.setSelected(position, true);
+                touchListener.setStartSelectPosition(position);
+                return false;
+            }
+        });
         tvOriginal = findViewById(R.id.tv_original);
         if (Setting.showOriginalMenu) {
             processOriginalMenu();
