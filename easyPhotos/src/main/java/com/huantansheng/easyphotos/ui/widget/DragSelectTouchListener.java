@@ -15,7 +15,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.widget.ScrollerCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.process.digital.util.LogUtils;
 
 
 public class DragSelectTouchListener implements RecyclerView.OnItemTouchListener{
@@ -243,7 +242,6 @@ public class DragSelectTouchListener implements RecyclerView.OnItemTouchListener
     }
 
     private void reset() {
-        LogUtils.showLonglog("BYZ","reset start");
         setIsActive(false);
 
         start = RecyclerView.NO_POSITION;
@@ -256,7 +254,6 @@ public class DragSelectTouchListener implements RecyclerView.OnItemTouchListener
         lastX = Float.MIN_VALUE;
         lastY = Float.MIN_VALUE;
         stopAutoScroll();
-        LogUtils.showLonglog("BYZ","reset end");
 
     }
 

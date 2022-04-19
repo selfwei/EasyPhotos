@@ -253,7 +253,7 @@ public class PhotosAdapter extends RecyclerView.Adapter {
          Photo item = getPhotoList().get(position);
 
         if (isSingle) {
-            singleSelector(item, p);
+            singleSelector(item, position);
             return;
         }
         if (unable) {
@@ -277,8 +277,8 @@ public class PhotosAdapter extends RecyclerView.Adapter {
                 item.selected = false;
                 return;
             }
-            ((PhotoViewHolder) holder).tvSelector.setBackgroundResource(R.drawable.bg_select_true_easy_photos);
-            ((PhotoViewHolder) holder).tvSelector.setText(String.valueOf(Result.count()));
+//            ((PhotoViewHolder) holder).tvSelector.setBackgroundResource(R.drawable.bg_select_true_easy_photos);
+//            ((PhotoViewHolder) holder).tvSelector.setText(String.valueOf(Result.count()));
             if (Result.count() == Setting.count) {
                 unable = true;
                 notifyDataSetChanged();
