@@ -270,6 +270,19 @@ public class PhotosAdapter extends RecyclerView.Adapter {
     public void toggleSelection(int pos)
     {
         final Photo item = (Photo) dataList.get(pos);
+        if (unable) {
+            if (item.selected) {
+                Result.removePhoto(item);
+                if (unable) {
+                    unable = false;
+                }
+                listener.onSelectorChanged();
+                notifyDataSetChanged();
+                return;
+            }
+            listener.onSelectorOutOfMax(null);
+            return;
+        }
         if(item.selected){
             Result.removePhoto(item);
             if (unable) {
