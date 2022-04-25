@@ -743,19 +743,6 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
         }
         rvPhotos.setLayoutManager(gridLayoutManager);
         rvPhotos.setAdapter(photosAdapter);
-
-        mDragSelectTouchListener = new DragSelectTouchListener()
-                // check region OnDragSelectListener for more infos
-                .withSelectListener(onDragSelectionListener)
-                // following is all optional
-                .withMaxScrollDistance(50)    // default: 16; 	defines the speed of the auto scrolling
-                .withTopOffset(0)       // default: 0; 		set an offset for the touch region on top of the RecyclerView
-                .withBottomOffset(0)    // default: 0; 		set an offset for the touch region on bottom of the RecyclerView
-                .withScrollAboveTopRegion(true)  // default: true; 	enable auto scrolling, even if the finger is moved above the top region
-                .withScrollBelowTopRegion(true)  // default: true; 	enable auto scrolling, even if the finger is moved below the top region
-                .withDebug(true)
-        ;
-
         onDragSelectionListener = new DragSelectTouchListener.OnAdvancedDragSelectListener() {
             @Override
             public void onSelectionStarted(int start) {
@@ -773,6 +760,19 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
 
             }
         };
+        mDragSelectTouchListener = new DragSelectTouchListener()
+                // check region OnDragSelectListener for more infos
+                .withSelectListener(onDragSelectionListener)
+                // following is all optional
+                .withMaxScrollDistance(50)    // default: 16; 	defines the speed of the auto scrolling
+                .withTopOffset(0)       // default: 0; 		set an offset for the touch region on top of the RecyclerView
+                .withBottomOffset(0)    // default: 0; 		set an offset for the touch region on bottom of the RecyclerView
+                .withScrollAboveTopRegion(true)  // default: true; 	enable auto scrolling, even if the finger is moved above the top region
+                .withScrollBelowTopRegion(true)  // default: true; 	enable auto scrolling, even if the finger is moved below the top region
+                .withDebug(true)
+        ;
+
+
         rvPhotos.addOnItemTouchListener(mDragSelectTouchListener);
         photosAdapter.setClickListener(new PhotosAdapter.ItemClickListener() {
 //            @Override
