@@ -743,6 +743,21 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
         }
         rvPhotos.setLayoutManager(gridLayoutManager);
         rvPhotos.setAdapter(photosAdapter);
+        photosAdapter.setClickListener(new PhotosAdapter.ItemClickListener() {
+//            @Override
+//            public void onItemClick(View view, int position) {
+//                LogUtils.showLonglog("BYZ","onItemClick:"+position);
+//                photosAdapter.toggleSelection(position);
+//            }
+
+            @Override
+            public boolean onItemLongClick(View view, int position) {
+                //  photosAdapter.toggleSelection(position);
+                Log.i("GGG","onItemLongClick:"+position);
+                mDragSelectTouchListener.startDragSelection(position);
+                return true;
+            }
+        });
         mDragSelectTouchListener = new DragSelectTouchListener()
                 // check region OnDragSelectListener for more infos
                 .withSelectListener(onDragSelectionListener)
@@ -1102,13 +1117,6 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
         shouldShowMenuDone();
     }
 
-    @Override
-    public boolean onItemLongClick(View view, int position) {
-        Log.i("GGG","onItemLongClick:"+position);
-        mDragSelectTouchListener.startDragSelection(position);
-
-        return false;
-    }
 
 
     @Override

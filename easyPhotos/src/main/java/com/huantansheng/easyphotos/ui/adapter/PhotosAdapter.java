@@ -39,6 +39,7 @@ public class PhotosAdapter extends RecyclerView.Adapter {
     private PhotosAdapter.OnClickListener listener;
     private boolean unable, isSingle;
     private int singlePosition;
+    private ItemClickListener mClickListener;
 
     private boolean clearAd = false;
 
@@ -114,6 +115,15 @@ public class PhotosAdapter extends RecyclerView.Adapter {
                 }
             });
 
+            ((PhotoViewHolder) holder).ivPhoto.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if (mClickListener != null)
+                        return mClickListener.onItemLongClick(view, getAdapterPosition());
+                    return false;
+                }
+            });
+
             ((PhotoViewHolder) holder).vSelector.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -158,51 +168,51 @@ public class PhotosAdapter extends RecyclerView.Adapter {
                     listener.onSelectorChanged();
                 }
             });
-            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    if (isSingle) {
-                        singleSelector(item, p);
-                        return true;
-                    }
-                    if (unable) {
-                        if (item.selected) {
-                            Result.removePhoto(item);
-                            if (unable) {
-                                unable = false;
-                            }
-                            listener.onSelectorChanged();
-                            notifyDataSetChanged();
-                            return true;
-                        }
-                        listener.onSelectorOutOfMax(null);
-                        return true;
-                    }
-                    item.selected = !item.selected;
-                    if (item.selected) {
-                        int res = Result.addPhoto(item);
-                        if (res != 0) {
-                            listener.onSelectorOutOfMax(res);
-                            item.selected = false;
-                            return true;
-                        }
-                        ((PhotoViewHolder) holder).tvSelector.setBackgroundResource(R.drawable.bg_select_true_easy_photos);
-                        ((PhotoViewHolder) holder).tvSelector.setText(String.valueOf(Result.count()));
-                        if (Result.count() == Setting.count) {
-                            unable = true;
-                            notifyDataSetChanged();
-                        }
-                    } else {
-                        Result.removePhoto(item);
-                        if (unable) {
-                            unable = false;
-                        }
-                        notifyDataSetChanged();
-                    }
-                    listener.onSelectorChanged();
-                    return false;
-                }
-            });
+//            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+//                @Override
+//                public boolean onLongClick(View v) {
+//                    if (isSingle) {
+//                        singleSelector(item, p);
+//                        return true;
+//                    }
+//                    if (unable) {
+//                        if (item.selected) {
+//                            Result.removePhoto(item);
+//                            if (unable) {
+//                                unable = false;
+//                            }
+//                            listener.onSelectorChanged();
+//                            notifyDataSetChanged();
+//                            return true;
+//                        }
+//                        listener.onSelectorOutOfMax(null);
+//                        return true;
+//                    }
+//                    item.selected = !item.selected;
+//                    if (item.selected) {
+//                        int res = Result.addPhoto(item);
+//                        if (res != 0) {
+//                            listener.onSelectorOutOfMax(res);
+//                            item.selected = false;
+//                            return true;
+//                        }
+//                        ((PhotoViewHolder) holder).tvSelector.setBackgroundResource(R.drawable.bg_select_true_easy_photos);
+//                        ((PhotoViewHolder) holder).tvSelector.setText(String.valueOf(Result.count()));
+//                        if (Result.count() == Setting.count) {
+//                            unable = true;
+//                            notifyDataSetChanged();
+//                        }
+//                    } else {
+//                        Result.removePhoto(item);
+//                        if (unable) {
+//                            unable = false;
+//                        }
+//                        notifyDataSetChanged();
+//                    }
+//                    listener.onSelectorChanged();
+//                    return false;
+//                }
+//            });
             return;
         }
 
@@ -377,8 +387,17 @@ public class PhotosAdapter extends RecyclerView.Adapter {
 
         void onSelectorChanged();
 
+    }
 
+    public interface ItemClickListener
+    {
+        // void onItemClick(View view, int position);
         boolean onItemLongClick(View view, int position);
+    }
+
+    public void setClickListener(ItemClickListener itemClickListener)
+    {
+        mClickListener = itemClickListener;
     }
 
     private static class CameraViewHolder extends RecyclerView.ViewHolder {
@@ -411,8 +430,8 @@ public class PhotosAdapter extends RecyclerView.Adapter {
 
         @Override
         public boolean onLongClick(View v) {
-            if (listener != null)
-                return listener.onItemLongClick(v, getAdapterPosition());
+            if (mClickListener != null)
+                return mClickListener.onItemLongClick(view, getAdapterPosition());
             return false;
         }
 
