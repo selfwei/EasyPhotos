@@ -119,7 +119,7 @@ public class PhotosAdapter extends RecyclerView.Adapter {
                 @Override
                 public boolean onLongClick(View v) {
                     if (mClickListener != null)
-                        return mClickListener.onItemLongClick(view, getAdapterPosition());
+                        return mClickListener.onItemLongClick(v, position);
                     return false;
                 }
             });
@@ -431,7 +431,7 @@ public class PhotosAdapter extends RecyclerView.Adapter {
         @Override
         public boolean onLongClick(View v) {
             if (mClickListener != null)
-                return mClickListener.onItemLongClick(view, getAdapterPosition());
+                return mClickListener.onItemLongClick(v, getAdapterPosition());
             return false;
         }
 
