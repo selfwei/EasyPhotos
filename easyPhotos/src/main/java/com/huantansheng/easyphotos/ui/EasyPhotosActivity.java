@@ -746,6 +746,7 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
         onDragSelectionListener = new DragSelectTouchListener.OnAdvancedDragSelectListener() {
             @Override
             public void onSelectionStarted(int start) {
+                photosAdapter.toggleSelection(start);
                 Log.i("GGG","onSelectionStarted:"+start);
             }
 
@@ -756,7 +757,12 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
 
             @Override
             public void onSelectChange(int start, int end, boolean isSelected) {
-                Log.i("GGG","onSelectChange:"+end);
+                Log.i("GGG","onSelectChange start:"+start+"  end:"+end+"  select:"+isSelected);
+                photosAdapter.toggleSelection(start);
+                int i;
+                for(i =start;i<end;i++){
+                    photosAdapter.toggleSelection(i+1);
+                }
 
             }
         };

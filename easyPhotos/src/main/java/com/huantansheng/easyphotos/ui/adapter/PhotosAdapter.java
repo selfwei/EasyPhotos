@@ -266,6 +266,34 @@ public class PhotosAdapter extends RecyclerView.Adapter {
         return photos;
     }
 
+    public void toggleSelection(int pos)
+    {
+        final Photo item = (Photo) dataList.get(pos);
+        if(item.selected){
+            Result.removePhoto(item);
+            if (unable) {
+                unable = false;
+            }
+            listener.onSelectorChanged();
+            notifyDataSetChanged();
+        }else {
+            int res = Result.addPhoto(item);
+            if (res != 0) {
+                listener.onSelectorOutOfMax(res);
+                item.selected = false;
+                return;
+            }
+            if (Result.count() == Setting.count) {
+                unable = true;
+                notifyDataSetChanged();
+            }
+        }
+
+        Log.i("BYZ","toggleSelection:"+pos);
+
+        notifyItemChanged(pos);
+    }
+
 
     public void clearAd() {
         clearAd = true;
