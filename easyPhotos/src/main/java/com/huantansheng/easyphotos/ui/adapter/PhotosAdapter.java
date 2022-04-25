@@ -275,7 +275,7 @@ public class PhotosAdapter extends RecyclerView.Adapter {
             if (unable) {
                 unable = false;
             }
-            notifyDataSetChanged();
+            //notifyDataSetChanged();
         }else {
             int res = Result.addPhoto(item);
             if (res != 0) {
@@ -285,7 +285,7 @@ public class PhotosAdapter extends RecyclerView.Adapter {
             }
             if (Result.count() == Setting.count) {
                 unable = true;
-                notifyDataSetChanged();
+               // notifyDataSetChanged();
             }
         }
         listener.onSelectorChanged();
