@@ -36,17 +36,14 @@ public class PhotosAdapter extends RecyclerView.Adapter {
 
     private ArrayList<Object> dataList;
     private LayoutInflater mInflater;
-    private OnClickListener listener;
+    private PhotosAdapter.OnClickListener listener;
     private boolean unable, isSingle;
     private int singlePosition;
 
     private boolean clearAd = false;
 
-    private View.OnLongClickListener longClickListener;
-    private View.OnClickListener clickListener;
 
-
-    public PhotosAdapter(Context cxt, ArrayList<Object> dataList, OnClickListener listener) {
+    public PhotosAdapter(Context cxt, ArrayList<Object> dataList, PhotosAdapter.OnClickListener listener) {
         this.dataList = dataList;
         this.listener = listener;
         this.mInflater = LayoutInflater.from(cxt);
@@ -64,14 +61,11 @@ public class PhotosAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         switch (viewType) {
             case TYPE_AD:
-                return new AdViewHolder(mInflater.inflate(R.layout.item_ad_easy_photos, parent, false));
+                return new AdViewHolder(mInflater.inflate(com.process.digital.R.layout.item_ad_easy_photos, parent, false));
             case TYPE_CAMERA:
-                return new CameraViewHolder(mInflater.inflate(R.layout.item_camera_easy_photos, parent, false));
+                return new CameraViewHolder(mInflater.inflate(com.process.digital.R.layout.item_camera_easy_photos, parent, false));
             default:
-                View view = mInflater.inflate(R.layout.item_rv_photos_easy_photos, parent, false);
-                view.setOnLongClickListener(longClickListener);
-                view.setOnClickListener(clickListener);
-                return new PhotoViewHolder(view);
+                return new PhotoViewHolder(mInflater.inflate(com.process.digital.R.layout.item_rv_photos_easy_photos, parent, false));
         }
     }
 
@@ -89,7 +83,7 @@ public class PhotosAdapter extends RecyclerView.Adapter {
             final boolean isGif = path.endsWith(Type.GIF) || type.endsWith(Type.GIF);
             if (Setting.showGif && isGif) {
                 Setting.imageEngine.loadGifAsBitmap(((PhotoViewHolder) holder).ivPhoto.getContext(), uri, ((PhotoViewHolder) holder).ivPhoto);
-                ((PhotoViewHolder) holder).tvType.setText(R.string.gif_easy_photos);
+                ((PhotoViewHolder) holder).tvType.setText(com.process.digital.R.string.gif_easy_photos);
                 ((PhotoViewHolder) holder).tvType.setVisibility(View.VISIBLE);
                 ((PhotoViewHolder) holder).ivVideo.setVisibility(View.GONE);
             } else if (Setting.showVideo && type.contains(Type.VIDEO)) {
@@ -120,7 +114,6 @@ public class PhotosAdapter extends RecyclerView.Adapter {
                 }
             });
 
-
             ((PhotoViewHolder) holder).vSelector.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -149,7 +142,7 @@ public class PhotosAdapter extends RecyclerView.Adapter {
                             item.selected = false;
                             return;
                         }
-                        ((PhotoViewHolder) holder).tvSelector.setBackgroundResource(R.drawable.bg_select_true_easy_photos);
+                        ((PhotoViewHolder) holder).tvSelector.setBackgroundResource(com.process.digital.R.drawable.bg_select_true_easy_photos);
                         ((PhotoViewHolder) holder).tvSelector.setText(String.valueOf(Result.count()));
                         if (Result.count() == Setting.count) {
                             unable = true;
@@ -163,6 +156,51 @@ public class PhotosAdapter extends RecyclerView.Adapter {
                         notifyDataSetChanged();
                     }
                     listener.onSelectorChanged();
+                }
+            });
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if (isSingle) {
+                        singleSelector(item, p);
+                        return true;
+                    }
+                    if (unable) {
+                        if (item.selected) {
+                            Result.removePhoto(item);
+                            if (unable) {
+                                unable = false;
+                            }
+                            listener.onSelectorChanged();
+                            notifyDataSetChanged();
+                            return true;
+                        }
+                        listener.onSelectorOutOfMax(null);
+                        return true;
+                    }
+                    item.selected = !item.selected;
+                    if (item.selected) {
+                        int res = Result.addPhoto(item);
+                        if (res != 0) {
+                            listener.onSelectorOutOfMax(res);
+                            item.selected = false;
+                            return true;
+                        }
+                        ((PhotoViewHolder) holder).tvSelector.setBackgroundResource(com.process.digital.R.drawable.bg_select_true_easy_photos);
+                        ((PhotoViewHolder) holder).tvSelector.setText(String.valueOf(Result.count()));
+                        if (Result.count() == Setting.count) {
+                            unable = true;
+                            notifyDataSetChanged();
+                        }
+                    } else {
+                        Result.removePhoto(item);
+                        if (unable) {
+                            unable = false;
+                        }
+                        notifyDataSetChanged();
+                    }
+                    listener.onSelectorChanged();
+                    return false;
                 }
             });
             return;
@@ -206,93 +244,6 @@ public class PhotosAdapter extends RecyclerView.Adapter {
         }
     }
 
-    public void setLongClickListener(View.OnLongClickListener clickListener) {
-        this.longClickListener = clickListener;
-    }
-
-    public void setClickListener(View.OnClickListener clickListener) {
-        this.clickListener = clickListener;
-    }
-
-    public void selectRangeChange(int start, int end, boolean isSelected) {
-        if (start < 0 || end >= dataList.size()) {
-            return;
-        }
-        if (isSelected) {
-            dataSelect(start, end);
-        } else {
-            dataUnselect(start, end);
-        }
-    }
-
-    private void dataSelect(int start, int end) {
-        for (int i = start; i <= end; i++) {
-            Photo model = getPhotoList().get(i);
-            if (!model.selected) {
-                setSelected(i,true);
-                notifyItemChanged(i);
-            }
-        }
-    }
-
-    private void dataUnselect(int start, int end) {
-        for (int i = start; i <= end; i++) {
-            Photo model = getPhotoList().get(i);
-            if (model.selected) {
-                setSelected(i,false);
-                notifyItemChanged(i);
-            }
-        }
-    }
-
-    public void setSelected(int position, boolean selected) {
-//        if (dataList.get(position).selected != selected) {
-//            dataList.get(position).selected = selected;
-//            notifyItemChanged(position);
-//        }
-         Photo item = getPhotoList().get(position);
-
-        if (isSingle) {
-            singleSelector(item, position);
-            return;
-        }
-        if (unable) {
-            if (item.selected) {
-                Result.removePhoto(item);
-                if (unable) {
-                    unable = false;
-                }
-                listener.onSelectorChanged();
-                notifyDataSetChanged();
-                return;
-            }
-            listener.onSelectorOutOfMax(null);
-            return;
-        }
-        item.selected = !item.selected;
-        if (item.selected) {
-            int res = Result.addPhoto(item);
-            if (res != 0) {
-                listener.onSelectorOutOfMax(res);
-                item.selected = false;
-                return;
-            }
-//            ((PhotoViewHolder) holder).tvSelector.setBackgroundResource(R.drawable.bg_select_true_easy_photos);
-//            ((PhotoViewHolder) holder).tvSelector.setText(String.valueOf(Result.count()));
-            if (Result.count() == Setting.count) {
-                unable = true;
-                notifyDataSetChanged();
-            }
-        } else {
-            Result.removePhoto(item);
-            if (unable) {
-                unable = false;
-            }
-            notifyDataSetChanged();
-        }
-        listener.onSelectorChanged();
-    }
-
     public ArrayList<Photo> getPhotoList() {
         int size = dataList.size();
         ArrayList<Photo> photos =new ArrayList<>();
@@ -304,6 +255,7 @@ public class PhotosAdapter extends RecyclerView.Adapter {
         }
         return photos;
     }
+
 
     public void clearAd() {
         clearAd = true;
@@ -326,25 +278,68 @@ public class PhotosAdapter extends RecyclerView.Adapter {
         listener.onSelectorChanged();
     }
 
+//    private void onSelfLongClick(View v , int p){
+//         Photo item = (Photo) dataList.get(p);
+//        if (isSingle) {
+//            singleSelector(item, p);
+//            return;
+//        }
+//        if (unable) {
+//            if (item.selected) {
+//                Result.removePhoto(item);
+//                if (unable) {
+//                    unable = false;
+//                }
+//                listener.onSelectorChanged();
+//                notifyDataSetChanged();
+//                return;
+//            }
+//            listener.onSelectorOutOfMax(null);
+//            return;
+//        }
+//        item.selected = !item.selected;
+//        if (item.selected) {
+//            int res = Result.addPhoto(item);
+//            if (res != 0) {
+//                listener.onSelectorOutOfMax(res);
+//                item.selected = false;
+//                return;
+//            }
+//            ((PhotosAdapter.PhotoViewHolder) holder).tvSelector.setBackgroundResource(R.drawable.bg_select_true_easy_photos);
+//            ((PhotosAdapter.PhotoViewHolder) holder).tvSelector.setText(String.valueOf(Result.count()));
+//            if (Result.count() == Setting.count) {
+//                unable = true;
+//                notifyDataSetChanged();
+//            }
+//        } else {
+//            Result.removePhoto(item);
+//            if (unable) {
+//                unable = false;
+//            }
+//            notifyDataSetChanged();
+//        }
+//        listener.onSelectorChanged();
+//    }
+
     private void updateSelector(TextView tvSelector, boolean selected, Photo photo, int position) {
         if (selected) {
             String number = Result.getSelectorNumber(photo);
             if (number.equals("0")) {
-                tvSelector.setBackgroundResource(R.drawable.bg_select_false_easy_photos);
+                tvSelector.setBackgroundResource(com.process.digital.R.drawable.bg_select_false_easy_photos);
                 tvSelector.setText(null);
                 return;
             }
             tvSelector.setText(number);
-            tvSelector.setBackgroundResource(R.drawable.bg_select_true_easy_photos);
+            tvSelector.setBackgroundResource(com.process.digital.R.drawable.bg_select_true_easy_photos);
             if (isSingle) {
                 singlePosition = position;
                 tvSelector.setText("1");
             }
         } else {
             if (unable) {
-                tvSelector.setBackgroundResource(R.drawable.bg_select_false_unable_easy_photos);
+                tvSelector.setBackgroundResource(com.process.digital.R.drawable.bg_select_false_unable_easy_photos);
             } else {
-                tvSelector.setBackgroundResource(R.drawable.bg_select_false_easy_photos);
+                tvSelector.setBackgroundResource(com.process.digital.R.drawable.bg_select_false_easy_photos);
             }
             tvSelector.setText(null);
         }
@@ -381,6 +376,9 @@ public class PhotosAdapter extends RecyclerView.Adapter {
         void onSelectorOutOfMax(@Nullable Integer result);
 
         void onSelectorChanged();
+
+
+        boolean onItemLongClick(View view, int position);
     }
 
     private static class CameraViewHolder extends RecyclerView.ViewHolder {
@@ -388,11 +386,11 @@ public class PhotosAdapter extends RecyclerView.Adapter {
 
         CameraViewHolder(View itemView) {
             super(itemView);
-            this.flCamera = itemView.findViewById(R.id.fl_camera);
+            this.flCamera = itemView.findViewById(com.process.digital.R.id.fl_camera);
         }
     }
 
-    public static class PhotoViewHolder extends RecyclerView.ViewHolder {
+    public  class PhotoViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener{
         final PressedImageView ivPhoto;
         final TextView tvSelector;
         final View vSelector;
@@ -401,11 +399,22 @@ public class PhotosAdapter extends RecyclerView.Adapter {
 
         PhotoViewHolder(View itemView) {
             super(itemView);
-            this.ivPhoto = itemView.findViewById(R.id.iv_photo);
-            this.tvSelector = itemView.findViewById(R.id.tv_selector);
-            this.vSelector = itemView.findViewById(R.id.v_selector);
-            this.tvType = itemView.findViewById(R.id.tv_type);
+            this.ivPhoto = itemView.findViewById(com.process.digital.R.id.iv_photo);
+            this.tvSelector = itemView.findViewById(com.process.digital.R.id.tv_selector);
+            this.vSelector = itemView.findViewById(com.process.digital.R.id.v_selector);
+            this.tvType = itemView.findViewById(com.process.digital.R.id.tv_type);
             this.ivVideo = itemView.findViewById(R.id.iv_play);
+            itemView.setOnLongClickListener(this);
         }
+
+
+
+        @Override
+        public boolean onLongClick(View v) {
+            if (listener != null)
+                return listener.onItemLongClick(v, getAdapterPosition());
+            return false;
+        }
+
     }
 }

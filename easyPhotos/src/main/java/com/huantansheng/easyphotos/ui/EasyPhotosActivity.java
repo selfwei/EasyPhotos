@@ -98,6 +98,8 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
     private TextView tvOriginal;
     private AnimatorSet setHide;
     private AnimatorSet setShow;
+    private DragSelectTouchListener mDragSelectTouchListener;
+    private DragSelectTouchListener.OnDragSelectListener onDragSelectionListener;
 
     private int currAlbumItemIndex = 0;
 
@@ -109,7 +111,6 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
     private RelativeLayout permissionView;
     private TextView tvPermission;
     private View mBottomBar;
-    private DragSelectTouchListener touchListener;
 
     private boolean isQ = false;
 
@@ -188,6 +189,7 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
         findViewById(R.id.iv_second_menu).setVisibility(Setting.showPuzzleMenu || Setting.showCleanMenu || Setting.showOriginalMenu ? View.VISIBLE : View.GONE);
         findViewById(R.id.iv_text_menu).setVisibility(Setting.showPuzzleMenu || Setting.showCleanMenu || Setting.showOriginalMenu ? View.VISIBLE : View.GONE);
         setClick(R.id.iv_back,R.id.tv_title);
+
     }
 
     private void hasPermissions() {
@@ -676,6 +678,7 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
 
 
     private void onAlbumWorkedDo() {
+        Log.i("GGG","1");
         initView();
     }
 
@@ -740,29 +743,36 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
         }
         rvPhotos.setLayoutManager(gridLayoutManager);
         rvPhotos.setAdapter(photosAdapter);
-        touchListener = new DragSelectTouchListener();
-        //监听滑动选择
-        rvPhotos.addOnItemTouchListener(touchListener);
+        mDragSelectTouchListener = new DragSelectTouchListener()
+                // check region OnDragSelectListener for more infos
+                .withSelectListener(onDragSelectionListener)
+                // following is all optional
+                .withMaxScrollDistance(50)    // default: 16; 	defines the speed of the auto scrolling
+                .withTopOffset(0)       // default: 0; 		set an offset for the touch region on top of the RecyclerView
+                .withBottomOffset(0)    // default: 0; 		set an offset for the touch region on bottom of the RecyclerView
+                .withScrollAboveTopRegion(true)  // default: true; 	enable auto scrolling, even if the finger is moved above the top region
+                .withScrollBelowTopRegion(true)  // default: true; 	enable auto scrolling, even if the finger is moved below the top region
+                .withDebug(true)
+        ;
 
-        touchListener.setSelectListener(new DragSelectTouchListener.onSelectListener() {
+        onDragSelectionListener = new DragSelectTouchListener.OnAdvancedDragSelectListener() {
+            @Override
+            public void onSelectionStarted(int start) {
+                Log.i("GGG","onSelectionStarted:"+start);
+            }
+
+            @Override
+            public void onSelectionFinished(int end) {
+                Log.i("GGG","onSelectionFinished:"+end);
+            }
+
             @Override
             public void onSelectChange(int start, int end, boolean isSelected) {
-                //选择的范围回调
-                Log.i("BYZ","onSelectChange");
-                photosAdapter.selectRangeChange(start, end, isSelected);
+                Log.i("GGG","onSelectChange:"+end);
+
             }
-        });
-        photosAdapter.setLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                Log.i("BYZ","onLongClick start");
-                int position = rvPhotos.getChildAdapterPosition(v);
-                Log.i("BYZ","onLongClick:"+position);
-                photosAdapter.setSelected(position, true);
-                touchListener.setStartSelectPosition(position);
-                return false;
-            }
-        });
+        };
+        rvPhotos.addOnItemTouchListener(mDragSelectTouchListener);
         tvOriginal = findViewById(R.id.tv_original);
         if (Setting.showOriginalMenu) {
             processOriginalMenu();
@@ -838,14 +848,14 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
             processOriginalMenu();
             processSecondMenu();
         } else if (R.id.tv_preview == id) {
-            PreviewActivity.start(EasyPhotosActivity.this, -1, 0);
+            com.huantansheng.easyphotos.ui.PreviewActivity.start(EasyPhotosActivity.this, -1, 0);
         } else if (R.id.fab_camera == id) {
             launchCamera(Code.REQUEST_CAMERA);
         } else if (R.id.iv_second_menu == id || R.id.iv_text_menu == id) {
             processSecondMenu();
         } else if (R.id.tv_puzzle == id) {
             processSecondMenu();
-            PuzzleSelectorActivity.start(this);
+            com.huantansheng.easyphotos.ui.PuzzleSelectorActivity.start(this);
         }
     }
 
@@ -1052,7 +1062,7 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
 
     @Override
     public void onPhotoClick(int position, int realPosition) {
-        PreviewActivity.start(EasyPhotosActivity.this, currAlbumItemIndex, realPosition);
+        com.huantansheng.easyphotos.ui.PreviewActivity.start(EasyPhotosActivity.this, currAlbumItemIndex, realPosition);
     }
 
     @Override
@@ -1090,6 +1100,14 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
     @Override
     public void onSelectorChanged() {
         shouldShowMenuDone();
+    }
+
+    @Override
+    public boolean onItemLongClick(View view, int position) {
+        Log.i("GGG","onItemLongClick:"+position);
+        mDragSelectTouchListener.startDragSelection(position);
+
+        return false;
     }
 
 
