@@ -275,7 +275,6 @@ public class PhotosAdapter extends RecyclerView.Adapter {
             if (unable) {
                 unable = false;
             }
-            listener.onSelectorChanged();
             notifyDataSetChanged();
         }else {
             int res = Result.addPhoto(item);
@@ -289,6 +288,8 @@ public class PhotosAdapter extends RecyclerView.Adapter {
                 notifyDataSetChanged();
             }
         }
+        listener.onSelectorChanged();
+
 
         Log.i("BYZ","toggleSelection:"+pos);
 
