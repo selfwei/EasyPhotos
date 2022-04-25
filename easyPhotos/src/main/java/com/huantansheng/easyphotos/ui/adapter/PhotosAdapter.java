@@ -24,6 +24,7 @@ import com.huantansheng.easyphotos.utils.media.DurationUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import android.util.Log;
 
 /**
  * 专辑相册适配器
