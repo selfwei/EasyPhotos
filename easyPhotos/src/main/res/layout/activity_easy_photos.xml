@@ -261,6 +261,22 @@
             app:layout_constraintLeft_toLeftOf="@+id/m_back_line"
             app:layout_constraintTop_toTopOf="@+id/m_tool_bar" />
 
+
+        <TextView
+            android:id="@+id/tv_explanation"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="0dp"
+            android:gravity="center"
+            android:text="说明:长按拖动可多选"
+            android:textColor="@color/home_text"
+            android:textSize="28dp"
+            android:visibility="gone"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/m_tool_bar"
+            app:layout_constraintTop_toTopOf="@+id/m_tool_bar" />
+
         <com.huantansheng.easyphotos.ui.widget.PressedTextView
             android:id="@+id/tv_done"
             android:layout_width="wrap_content"

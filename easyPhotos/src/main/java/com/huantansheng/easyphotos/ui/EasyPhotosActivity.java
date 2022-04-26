@@ -100,6 +100,7 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
     private AnimatorSet setShow;
     private DragSelectTouchListener mDragSelectTouchListener;
     private DragSelectTouchListener.OnDragSelectListener onDragSelectionListener;
+    private TextView tvExplanation
 
     private int currAlbumItemIndex = 0;
 
@@ -800,6 +801,13 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
         tvOriginal = findViewById(R.id.tv_original);
         if (Setting.showOriginalMenu) {
             processOriginalMenu();
+        } else {
+            tvOriginal.setVisibility(View.GONE);
+        }
+
+        tvExplanation = findViewById(R.id.tv_explanation);
+        if (Setting.slide) {
+            tvOriginal.setVisibility(View.VISIBLE);
         } else {
             tvOriginal.setVisibility(View.GONE);
         }
