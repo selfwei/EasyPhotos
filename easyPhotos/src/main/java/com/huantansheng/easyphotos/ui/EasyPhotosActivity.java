@@ -678,7 +678,6 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
 
 
     private void onAlbumWorkedDo() {
-        Log.i("GGG","1");
         initView();
     }
 
@@ -743,58 +742,61 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
         }
         rvPhotos.setLayoutManager(gridLayoutManager);
         rvPhotos.setAdapter(photosAdapter);
-        onDragSelectionListener = new DragSelectTouchListener.OnAdvancedDragSelectListener() {
-            @Override
-            public void onSelectionStarted(int start) {
-                photosAdapter.toggleSelection(start);
-                Log.i("GGG","onSelectionStarted:"+start);
-            }
-
-            @Override
-            public void onSelectionFinished(int end) {
-                Log.i("GGG","onSelectionFinished:"+end);
-            }
-
-            @Override
-            public void onSelectChange(int start, int end, boolean isSelected) {
-                Log.i("GGG","onSelectChange start:"+start+"  end:"+end+"  select:"+isSelected);
-                photosAdapter.toggleSelection(start);
-                int i;
-                for(i =start;i<end;i++){
-                    photosAdapter.toggleSelection(i+1);
+        if(Setting.slide){
+            onDragSelectionListener = new DragSelectTouchListener.OnAdvancedDragSelectListener() {
+                @Override
+                public void onSelectionStarted(int start) {
+                    photosAdapter.toggleSelection(start);
+                    Log.i("GGG","onSelectionStarted:"+start);
                 }
 
-            }
-        };
-        mDragSelectTouchListener = new DragSelectTouchListener()
-                // check region OnDragSelectListener for more infos
-                .withSelectListener(onDragSelectionListener)
-                // following is all optional
-                .withMaxScrollDistance(50)    // default: 16; 	defines the speed of the auto scrolling
-                .withTopOffset(0)       // default: 0; 		set an offset for the touch region on top of the RecyclerView
-                .withBottomOffset(0)    // default: 0; 		set an offset for the touch region on bottom of the RecyclerView
-                .withScrollAboveTopRegion(true)  // default: true; 	enable auto scrolling, even if the finger is moved above the top region
-                .withScrollBelowTopRegion(true)  // default: true; 	enable auto scrolling, even if the finger is moved below the top region
-                .withDebug(true)
-        ;
+                @Override
+                public void onSelectionFinished(int end) {
+                    Log.i("GGG","onSelectionFinished:"+end);
+                }
+
+                @Override
+                public void onSelectChange(int start, int end, boolean isSelected) {
+                    Log.i("GGG","onSelectChange start:"+start+"  end:"+end+"  select:"+isSelected);
+                    photosAdapter.toggleSelection(start);
+                    int i;
+                    for(i =start;i<end;i++){
+                        photosAdapter.toggleSelection(i+1);
+                    }
+
+                }
+            };
+            mDragSelectTouchListener = new DragSelectTouchListener()
+                    // check region OnDragSelectListener for more infos
+                    .withSelectListener(onDragSelectionListener)
+                    // following is all optional
+                    .withMaxScrollDistance(50)    // default: 16; 	defines the speed of the auto scrolling
+                    .withTopOffset(0)       // default: 0; 		set an offset for the touch region on top of the RecyclerView
+                    .withBottomOffset(0)    // default: 0; 		set an offset for the touch region on bottom of the RecyclerView
+                    .withScrollAboveTopRegion(true)  // default: true; 	enable auto scrolling, even if the finger is moved above the top region
+                    .withScrollBelowTopRegion(true)  // default: true; 	enable auto scrolling, even if the finger is moved below the top region
+                    .withDebug(false)
+            ;
 
 
-        rvPhotos.addOnItemTouchListener(mDragSelectTouchListener);
-        photosAdapter.setClickListener(new PhotosAdapter.ItemClickListener() {
+            rvPhotos.addOnItemTouchListener(mDragSelectTouchListener);
+            photosAdapter.setClickListener(new PhotosAdapter.ItemClickListener() {
 //            @Override
 //            public void onItemClick(View view, int position) {
 //                LogUtils.showLonglog("BYZ","onItemClick:"+position);
 //                photosAdapter.toggleSelection(position);
 //            }
 
-            @Override
-            public boolean onItemLongClick(View view, int position) {
-                //  photosAdapter.toggleSelection(position);
-                Log.i("GGG","onItemLongClick:"+position);
-                mDragSelectTouchListener.startDragSelection(position);
-                return true;
-            }
-        });
+                @Override
+                public boolean onItemLongClick(View view, int position) {
+                    //  photosAdapter.toggleSelection(position);
+                    Log.i("GGG","onItemLongClick:"+position);
+                    mDragSelectTouchListener.startDragSelection(position);
+                    return true;
+                }
+            });
+        }
+
         tvOriginal = findViewById(R.id.tv_original);
         if (Setting.showOriginalMenu) {
             processOriginalMenu();

@@ -56,6 +56,8 @@ public class Setting {
     public static int complexPictureCount = 0;
     //当传入已选中图片时，是否按照之前选中的顺序排序
     public static boolean isSequentialSelectedPhotos = true;
+    //默认不滑动
+    public static boolean slide = false;
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef(value = {LIST_FIRST, BOTTOM_RIGHT})

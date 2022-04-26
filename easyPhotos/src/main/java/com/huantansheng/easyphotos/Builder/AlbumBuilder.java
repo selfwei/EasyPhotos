@@ -220,6 +220,18 @@ public class AlbumBuilder {
         return AlbumBuilder.this;
     }
 
+
+    /**
+     * 是否支持滑动
+     *
+     * @param shouldShow 是否显示
+     * @return @return AlbumBuilder
+     */
+    public AlbumBuilder setSlide(boolean slide) {
+        Setting.slide = slide;
+        return AlbumBuilder.this;
+    }
+
     /**
      * 支持复杂选择情况
      *
