@@ -807,9 +807,9 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
 
         tvExplanation = findViewById(R.id.tv_explanation);
         if (Setting.slide) {
-            tvOriginal.setVisibility(View.VISIBLE);
+            tvExplanation.setVisibility(View.VISIBLE);
         } else {
-            tvOriginal.setVisibility(View.GONE);
+            tvExplanation.setVisibility(View.GONE);
         }
         tvPreview = findViewById(R.id.tv_preview);
 
