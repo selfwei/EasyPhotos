@@ -100,7 +100,7 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
     private AnimatorSet setShow;
     private DragSelectTouchListener mDragSelectTouchListener;
     private DragSelectTouchListener.OnDragSelectListener onDragSelectionListener;
-    private TextView tvExplanation
+    private TextView tvExplanation;
 
     private int currAlbumItemIndex = 0;
 
