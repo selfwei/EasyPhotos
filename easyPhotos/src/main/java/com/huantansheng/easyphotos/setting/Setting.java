@@ -95,7 +95,7 @@ public class Setting {
         complexVideoCount = 0;
         complexPictureCount = 0;
         isSequentialSelectedPhotos = true;
-        slide = false
+        slide = false;
     }
 
     public static boolean isFilter(String type) {
