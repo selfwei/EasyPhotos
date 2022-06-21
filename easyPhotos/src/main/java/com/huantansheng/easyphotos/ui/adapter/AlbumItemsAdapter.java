@@ -35,6 +35,7 @@ public class AlbumItemsAdapter extends RecyclerView.Adapter {
     private OnClickListener listener;
     private int adPosition = 0;
     private int padding = 0;
+    private Context context;
 
     private boolean clearAd = false;
 
@@ -48,6 +49,7 @@ public class AlbumItemsAdapter extends RecyclerView.Adapter {
         this.mInflater = LayoutInflater.from(cxt);
         this.listener = listener;
         this.selectedPosition = selectedPosition;
+        this.context = cxt;
     }
 
     @Override
@@ -95,7 +97,7 @@ public class AlbumItemsAdapter extends RecyclerView.Adapter {
                     selectedPosition = p;
                     notifyItemChanged(tempSelected);
                     notifyItemChanged(p);
-                    Settings.System.putString(cxt.getContentResolver(), "AlbumItemName", item.name);
+                    Settings.System.putString(context.getContentResolver(), "AlbumItemName", item.name);
                     listener.onAlbumItemClick(p, realPosition);
                 }
             });
