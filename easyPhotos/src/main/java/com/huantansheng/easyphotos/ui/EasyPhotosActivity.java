@@ -1043,6 +1043,8 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
         updatePhotos(realPosition);
         showAlbumItems(false);
         tvAlbumItems.setText(albumModel.getAlbumItems().get(realPosition).name);
+        Settings.System.putString(getContentResolver(), "AlbumItemName", albumModel.getAlbumItems().get(realPosition).name);
+
     }
 
     private void updatePhotos(int currAlbumItemIndex) {
