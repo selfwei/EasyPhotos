@@ -712,7 +712,7 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
         mSecondMenus = findViewById(R.id.m_second_level_menu);
         int columns = getResources().getInteger(R.integer.photos_columns_easy_photos);
         tvAlbumItems = findViewById(R.id.tv_album_items);
-        String albumItemName = Settings.System.getString(getContentResolver(),"AlbumItemName");
+        String albumItemName = Settings.Global.getString(getContentResolver(),"AlbumItemName");
 
         if(albumItemName != null && !albumItemName.trim().equals("")){
             for(int i =0;i<albumModel.getAlbumItems().size();i++){
@@ -1043,7 +1043,7 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
         updatePhotos(realPosition);
         showAlbumItems(false);
         tvAlbumItems.setText(albumModel.getAlbumItems().get(realPosition).name);
-        Settings.System.putString(getContentResolver(), "AlbumItemName", albumModel.getAlbumItems().get(realPosition).name);
+        Settings.Global.putString(getContentResolver(), "AlbumItemName", albumModel.getAlbumItems().get(realPosition).name);
 
     }
 
