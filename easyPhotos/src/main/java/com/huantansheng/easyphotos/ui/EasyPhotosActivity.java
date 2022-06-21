@@ -715,7 +715,7 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
         String albumItemName = Settings.System.getString(getContentResolver(),"AlbumItemName");
 
         if(albumItemName != null && !albumItemName.trim().equals("")){
-            for(int i =0;i<albumModel.getAlbumItems().size;i++){
+            for(int i =0;i<albumModel.getAlbumItems().size();i++){
                 if(albumItemName.equals(albumModel.getAlbumItems().get(i).name)){
                     selectAlbumposition = i;
                 }
