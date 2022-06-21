@@ -75,6 +75,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import android.provider.Settings;
 
 public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsAdapter.OnClickListener, PhotosAdapter.OnClickListener, AdListener, View.OnClickListener {
 
@@ -112,6 +113,7 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
     private RelativeLayout permissionView;
     private TextView tvPermission;
     private View mBottomBar;
+    private int selectAlbumposition =0;
 
     private boolean isQ = false;
 
@@ -710,13 +712,26 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
         mSecondMenus = findViewById(R.id.m_second_level_menu);
         int columns = getResources().getInteger(R.integer.photos_columns_easy_photos);
         tvAlbumItems = findViewById(R.id.tv_album_items);
-        tvAlbumItems.setText(albumModel.getAlbumItems().get(0).name);
+        String albumItemName = Settings.System.getString(getContentResolver(),"AlbumItemName");
+
+        if(albumItemName != null && !albumItemName.trim().equals("")){
+            for(int i =0;i<albumModel.getAlbumItems().size;i++){
+                if(albumItemName.equals(albumModel.getAlbumItems().get(i).name)){
+                    selectAlbumposition = i;
+                }
+            }
+            tvAlbumItems.setText(albumModel.getAlbumItems().get(selectAlbumposition).name);
+
+        }else {
+            tvAlbumItems.setText(albumModel.getAlbumItems().get(0).name);
+        }
+
         tvDone = findViewById(R.id.tv_done);
         rvPhotos = findViewById(R.id.rv_photos);
         ((SimpleItemAnimator) rvPhotos.getItemAnimator()).setSupportsChangeAnimations(false);
         //去除item更新的闪光
         photoList.clear();
-        photoList.addAll(albumModel.getCurrAlbumItemPhotos(0));
+        photoList.addAll(albumModel.getCurrAlbumItemPhotos(selectAlbumposition));
         int index = 0;
         if (Setting.hasPhotosAd()) {
             photoList.add(index, Setting.photosAdView);
@@ -840,7 +855,7 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
             }
             albumItemList.add(albumItemsAdIndex, Setting.albumItemsAdView);
         }
-        albumItemsAdapter = new AlbumItemsAdapter(this, albumItemList, 0, this);
+        albumItemsAdapter = new AlbumItemsAdapter(this, albumItemList, selectAlbumposition, this);
         rvAlbumItems.setLayoutManager(new LinearLayoutManager(this));
         rvAlbumItems.setAdapter(albumItemsAdapter);
     }

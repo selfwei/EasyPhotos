@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.provider.Settings;
+
 
 import com.huantansheng.easyphotos.R;
 import com.huantansheng.easyphotos.models.ad.AdViewHolder;
@@ -93,6 +95,7 @@ public class AlbumItemsAdapter extends RecyclerView.Adapter {
                     selectedPosition = p;
                     notifyItemChanged(tempSelected);
                     notifyItemChanged(p);
+                    Settings.System.putString(getContentResolver(), "AlbumItemName", item.name);
                     listener.onAlbumItemClick(p, realPosition);
                 }
             });
