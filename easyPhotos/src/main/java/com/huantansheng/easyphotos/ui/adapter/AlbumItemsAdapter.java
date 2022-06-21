@@ -95,7 +95,7 @@ public class AlbumItemsAdapter extends RecyclerView.Adapter {
                     selectedPosition = p;
                     notifyItemChanged(tempSelected);
                     notifyItemChanged(p);
-                    Settings.System.putString(getContentResolver(), "AlbumItemName", item.name);
+                    Settings.System.putString(cxt.getContentResolver(), "AlbumItemName", item.name);
                     listener.onAlbumItemClick(p, realPosition);
                 }
             });
