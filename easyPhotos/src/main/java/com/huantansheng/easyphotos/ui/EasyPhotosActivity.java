@@ -75,7 +75,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
-import android.provider.Settings;
 
 public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsAdapter.OnClickListener, PhotosAdapter.OnClickListener, AdListener, View.OnClickListener {
 
@@ -712,11 +711,10 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
         mSecondMenus = findViewById(R.id.m_second_level_menu);
         int columns = getResources().getInteger(R.integer.photos_columns_easy_photos);
         tvAlbumItems = findViewById(R.id.tv_album_items);
-        String albumItemName = Settings.Global.getString(getContentResolver(),"AlbumItemName");
 
-        if(albumItemName != null && !albumItemName.trim().equals("")){
+        if(Setting.albumName != null){
             for(int i =0;i<albumModel.getAlbumItems().size();i++){
-                if(albumItemName.equals(albumModel.getAlbumItems().get(i).name)){
+                if(Setting.albumName.equals(albumModel.getAlbumItems().get(i).name)){
                     selectAlbumposition = i;
                 }
             }
@@ -1043,7 +1041,8 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
         updatePhotos(realPosition);
         showAlbumItems(false);
         tvAlbumItems.setText(albumModel.getAlbumItems().get(realPosition).name);
-        Settings.Global.putString(getContentResolver(), "AlbumItemName", albumModel.getAlbumItems().get(realPosition).name);
+        //Settings.Global.putString(getContentResolver(), "AlbumItemName", albumModel.getAlbumItems().get(realPosition).name);
+        Setting.albumName = albumModel.getAlbumItems().get(realPosition).name;
 
     }
 

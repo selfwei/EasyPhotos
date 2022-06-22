@@ -59,6 +59,9 @@ public class Setting {
     //默认不滑动
     public static boolean slide = false;
 
+    //上次选择的专辑名称
+    public static String  albumName = null;
+
     @Retention(RetentionPolicy.SOURCE)
     @IntDef(value = {LIST_FIRST, BOTTOM_RIGHT})
     public @interface Location {
