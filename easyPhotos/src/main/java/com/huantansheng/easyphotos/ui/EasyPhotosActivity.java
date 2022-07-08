@@ -68,6 +68,7 @@ import com.huantansheng.easyphotos.utils.settings.SettingsUtils;
 import com.huantansheng.easyphotos.utils.system.SystemUtils;
 import com.huantansheng.easyphotos.utils.uri.UriUtils;
 import com.huantansheng.easyphotos.ui.widget.DragSelectTouchListener;
+import com.huantansheng.easyphotos.utils.PhotoSelectHolder;
 
 import java.io.File;
 import java.io.IOException;
