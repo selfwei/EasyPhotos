@@ -969,7 +969,11 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
         Intent intent = new Intent();
         Result.processOriginal();
         resultList.addAll(Result.photos);
-        intent.putParcelableArrayListExtra(EasyPhotos.RESULT_PHOTOS, resultList);
+        PhotoSelectHolder.setData(Result.photos);
+        if(Result.photos.size()<1000){
+            intent.putParcelableArrayListExtra(EasyPhotos.RESULT_PHOTOS, resultList);
+        }
+
         intent.putExtra(EasyPhotos.RESULT_SELECTED_ORIGINAL,
                 Setting.selectedOriginal);
         setResult(RESULT_OK, intent);
