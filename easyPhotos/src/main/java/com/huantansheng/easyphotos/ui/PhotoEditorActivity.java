@@ -7,9 +7,12 @@ import android.view.View;
 import com.huantansheng.easyphotos.emoji.Emoji;
 import com.huantansheng.easyphotos.emoji.EmojiDrawer;
 import com.huantansheng.easyphotos.emoji.IEmojiCallback;
+import com.huantansheng.easyphotos.event.Event;
 import com.process.editor.PictureEditActivity;
 import com.process.editor.bean.StickerText;
 import com.process.editor.util.Utils;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * 说明：
@@ -64,6 +67,7 @@ public class PhotoEditorActivity extends PictureEditActivity implements IEmojiCa
     @Override
     public void onSaveSuccess(String savePath)
     {
+        EventBus.getDefault().post(new Event.ReloadEvent());
         finish();
     }
 }

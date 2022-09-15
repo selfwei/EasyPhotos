@@ -49,6 +49,7 @@ import com.huantansheng.easyphotos.R;
 import com.huantansheng.easyphotos.constant.Code;
 import com.huantansheng.easyphotos.constant.Key;
 import com.huantansheng.easyphotos.constant.Type;
+import com.huantansheng.easyphotos.event.Event;
 import com.huantansheng.easyphotos.models.ad.AdListener;
 import com.huantansheng.easyphotos.models.album.AlbumModel;
 import com.huantansheng.easyphotos.models.album.entity.Photo;
@@ -69,6 +70,10 @@ import com.huantansheng.easyphotos.utils.system.SystemUtils;
 import com.huantansheng.easyphotos.utils.uri.UriUtils;
 import com.huantansheng.easyphotos.ui.widget.DragSelectTouchListener;
 import com.huantansheng.easyphotos.utils.PhotoSelectHolder;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 import java.io.IOException;
@@ -151,6 +156,9 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        EventBus.getDefault().register(this);
+
         setContentView(R.layout.activity_easy_photos);
         hideActionBar();
         adaptationStatusBar();
@@ -1155,7 +1163,16 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
         shouldShowMenuDone();
     }
 
-
+    /**
+     * 数据刷新事件
+     *
+     * @param event 刷新事件
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onFresh(Event.ReloadEvent event)
+    {
+        hasPermissions();
+    }
 
     @Override
     public void onBackPressed() {
@@ -1183,6 +1200,7 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
     @Override
     protected void onDestroy() {
         if (albumModel != null) albumModel.stopQuery();
+        EventBus.getDefault().unregister(this);
         super.onDestroy();
     }
 
