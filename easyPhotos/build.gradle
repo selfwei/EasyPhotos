@@ -6,11 +6,16 @@ android {
     compileSdkVersion 30
 
     defaultConfig {
-        minSdkVersion 15
+        minSdkVersion 26
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -22,6 +27,8 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.davemorrissey.labs:subsampling-scale-image-view-androidx:3.10.0'
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
+    implementation 'com.github.selfwei:PictureEditor:1.0.0'
+    implementation 'com.astuetz:pagerslidingtabstrip:1.0.1'
 }
 
 //// 指定编码

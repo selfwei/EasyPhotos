@@ -42,4 +42,11 @@
 
     <!--状态栏-->
     <color name="easy_photos_status_bar">#393a3f</color>
+
+    <color name="emoji_tab_indicator">#66ffffff</color>
+    <color name="emoji_tab_underline">#11ffffff</color>
+
+    <color name="home_text">#FF97C2FF</color>
+    <color name="dialog_cancel">#FF4E8DF6</color>
+    <color name="white">#FFFFFFFF</color>
 </resources>

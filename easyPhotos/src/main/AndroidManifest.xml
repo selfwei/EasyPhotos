@@ -38,6 +38,12 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:theme="@style/EasyPhotosTheme" />
+
+        <activity
+            android:name=".ui.PhotoEditorActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@style/EasyPhotosTheme" />
     </application>
 
 </manifest>

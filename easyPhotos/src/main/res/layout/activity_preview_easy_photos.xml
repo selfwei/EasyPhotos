@@ -64,6 +64,23 @@
                     android:textColor="@color/easy_photos_fg_primary" />
 
                 <com.huantansheng.easyphotos.ui.widget.PressedTextView
+                    android:id="@+id/tv_edit_picture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@drawable/bg_menu_done_easy_photos"
+                    android:gravity="center"
+                    android:maxWidth="200dp"
+                    android:padding="6dp"
+                    android:textColor="@color/menu_text_easy_photos"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:text="@string/selector_action_edit_easy_photos"/>
+
+                <com.huantansheng.easyphotos.ui.widget.PressedTextView
                     android:id="@+id/tv_done"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

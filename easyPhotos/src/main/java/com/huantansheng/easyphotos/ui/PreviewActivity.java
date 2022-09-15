@@ -38,6 +38,7 @@ import com.huantansheng.easyphotos.ui.adapter.PreviewPhotosAdapter;
 import com.huantansheng.easyphotos.ui.widget.PressedTextView;
 import com.huantansheng.easyphotos.utils.Color.ColorUtils;
 import com.huantansheng.easyphotos.utils.system.SystemUtils;
+import com.process.editor.PictureEditActivity;
 
 import java.util.ArrayList;
 
@@ -79,7 +80,7 @@ public class PreviewActivity extends AppCompatActivity implements PreviewPhotosA
     private boolean mVisible;
     View decorView;
     private TextView tvOriginal, tvNumber;
-    private PressedTextView tvDone;
+    private PressedTextView tvDone, tvEditPicture;
     private ImageView ivSelector;
     private RecyclerView rvPhotos;
     private PreviewPhotosAdapter adapter;
@@ -239,6 +240,7 @@ public class PreviewActivity extends AppCompatActivity implements PreviewPhotosA
         ivSelector = (ImageView) findViewById(R.id.iv_selector);
         tvNumber = (TextView) findViewById(R.id.tv_number);
         tvDone = (PressedTextView) findViewById(R.id.tv_done);
+        tvEditPicture = (PressedTextView) findViewById(R.id.tv_edit_picture);
         tvOriginal = (TextView) findViewById(R.id.tv_original);
         flFragment = (FrameLayout) findViewById(R.id.fl_fragment);
         previewFragment =
@@ -249,7 +251,7 @@ public class PreviewActivity extends AppCompatActivity implements PreviewPhotosA
             tvOriginal.setVisibility(View.GONE);
         }
 
-        setClick(tvOriginal, tvDone, ivSelector);
+        setClick(tvOriginal, tvDone, ivSelector, tvEditPicture);
 
         initRecyclerView();
         shouldShowMenuDone();
@@ -314,6 +316,12 @@ public class PreviewActivity extends AppCompatActivity implements PreviewPhotosA
             intent.putExtra(Key.PREVIEW_CLICK_DONE, true);
             setResult(RESULT_OK, intent);
             finish();
+        }
+        else if (R.id.tv_edit_picture == id)
+        {
+            Intent editIntent = new Intent(this, PhotoEditorActivity.class);
+            editIntent.putExtra(PictureEditActivity.EXTRA_IMAGE_URI, photos.get(lastPosition).uri);
+            startActivity(editIntent);
         }
 //        else if (R.id.m_bottom_bar == id) {
 //
