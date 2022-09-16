@@ -67,7 +67,7 @@ public class PhotoEditorActivity extends PictureEditActivity implements IEmojiCa
     @Override
     public void onSaveSuccess(String savePath)
     {
-        EventBus.getDefault().post(new Event.ReloadEvent());
+        EventBus.getDefault().post(new Event.ReloadEvent(savePath));
         finish();
     }
 }

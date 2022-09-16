@@ -16,8 +16,16 @@ public class Event
      */
     public static class ReloadEvent
     {
-        public ReloadEvent()
+        private String path;
+
+        public ReloadEvent(String path)
         {
+            this.path = path;
+        }
+
+        public String getPath()
+        {
+            return path;
         }
     }
 }

@@ -485,6 +485,9 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
     String albumName;
 
     private void addNewPhoto(Photo photo) {
+
+        Log.i("测试", "photo >> " + photo.path);
+
         photo.selectedOriginal = Setting.selectedOriginal;
 
         if (!isQ) {
@@ -550,6 +553,9 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
             name = cursor.getString(2);
             dateTime = cursor.getLong(3);
             type = cursor.getString(4);
+
+            Log.i("测试", "type >> " + type);
+
             size = cursor.getLong(5);
             if (shouldReadWidth) {
                 width = cursor.getInt(cursor.getColumnIndex(MediaStore.MediaColumns.WIDTH));
@@ -1171,7 +1177,14 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onFresh(Event.ReloadEvent event)
     {
-        hasPermissions();
+        addNewPhoto(getPhotoEdit(event.getPath()));
+    }
+
+    private Photo getPhotoEdit(String path)
+    {
+        Uri imageUri = UriUtils.getUri(this, new File(path));
+        String filerName = path.substring(path.lastIndexOf("/") + 1);
+        return new Photo(filerName, imageUri, path, 0, 0, 0, 0, 0, 0, "image/JPEG");
     }
 
     @Override
