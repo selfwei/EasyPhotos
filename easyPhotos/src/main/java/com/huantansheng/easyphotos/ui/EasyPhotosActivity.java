@@ -486,8 +486,6 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
 
     private void addNewPhoto(Photo photo) {
 
-        Log.i("测试", "photo >> " + photo.path);
-
         photo.selectedOriginal = Setting.selectedOriginal;
 
         if (!isQ) {
@@ -553,8 +551,6 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
             name = cursor.getString(2);
             dateTime = cursor.getLong(3);
             type = cursor.getString(4);
-
-            Log.i("测试", "type >> " + type);
 
             size = cursor.getLong(5);
             if (shouldReadWidth) {
