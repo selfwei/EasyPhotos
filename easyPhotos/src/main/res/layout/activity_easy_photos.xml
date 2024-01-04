@@ -277,6 +277,21 @@
             app:layout_constraintBottom_toBottomOf="@+id/m_tool_bar"
             app:layout_constraintTop_toTopOf="@+id/m_tool_bar" />
 
+        <TextView
+            android:id="@+id/tv_that_day"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginRight="32dp"
+            android:gravity="center"
+            android:text="一键选择当天"
+            android:textColor="@color/home_text"
+            android:textSize="28dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/m_tool_bar"
+            app:layout_constraintRight_toLeftOf="@id/tv_done"
+            app:layout_constraintTop_toTopOf="@+id/m_tool_bar" />
+
         <com.huantansheng.easyphotos.ui.widget.PressedTextView
             android:id="@+id/tv_done"
             android:layout_width="wrap_content"
