@@ -7,6 +7,8 @@ import com.lxj.xpopup.XPopup;
 
 import com.huantansheng.easyphotos.R;
 
+import me.jessyan.autosize.AutoSize;
+
 /**
  * 说明：提示信息工具类
  * <p>
@@ -28,6 +30,7 @@ public final class TipUtil
      */
     public static void centerList(Context context, String title, String[] data, ChooseCallBack chooseCallBack)
     {
+        AutoSize.autoConvertDensity((Activity) context, 1920, true);
         new XPopup.Builder(context)
                 .asCenterList(title, data, null, -1,
                         chooseCallBack::callBack, R.layout.xpopup_center_list, R.layout.xpopup_center_item)
