@@ -284,7 +284,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginRight="32dp"
             android:gravity="center"
-            android:text="一键选择当天"
+            android:text="一键选择某天"
             android:textColor="@color/home_text"
             android:textSize="28dp"
             android:visibility="visible"

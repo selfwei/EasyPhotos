@@ -60,7 +60,9 @@ import com.huantansheng.easyphotos.ui.adapter.PhotosAdapter;
 import com.huantansheng.easyphotos.ui.dialog.LoadingDialog;
 import com.huantansheng.easyphotos.ui.widget.PressedTextView;
 import com.huantansheng.easyphotos.utils.Color.ColorUtils;
+import com.huantansheng.easyphotos.utils.DateUtil;
 import com.huantansheng.easyphotos.utils.String.StringUtils;
+import com.huantansheng.easyphotos.utils.TipUtil;
 import com.huantansheng.easyphotos.utils.bitmap.BitmapUtils;
 import com.huantansheng.easyphotos.utils.media.DurationUtils;
 import com.huantansheng.easyphotos.utils.media.MediaScannerConnectionUtils;
@@ -917,20 +919,29 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
             com.huantansheng.easyphotos.ui.PuzzleSelectorActivity.start(this);
         }
         else if (R.id.tv_that_day == id) {
-            Result.removeAll();
-            List<Photo> dayPhotoList = photosAdapter.getPhotoList();
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-            for (Photo photo : dayPhotoList) {
-                String date = format.format(photo.time * 1000);
-                String currentDay = format.format(new Date());
-                if (currentDay.equalsIgnoreCase(date)) {
-                    Result.addPhoto(photo);
-                }
+
+            List<String> dataList = new ArrayList<>();
+            Date currentDate = new Date();
+            for (int i = 0; i < 7; i++)
+            {
+                dataList.add(DateUtil.date2StringByDay(DateUtil.addDay(currentDate, -1 * i)));
             }
 
-            photosAdapter.change();
-            shouldShowMenuDone();
-            processSecondMenu();
+            TipUtil.centerList(this, "日期选择", dataList.toArray(new String[0]), (position, text) -> {
+                Result.removeAll();
+                List<Photo> dayPhotoList = photosAdapter.getPhotoList();
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                for (Photo photo : dayPhotoList) {
+                    String date = format.format(photo.time * 1000);
+                    if (text.equalsIgnoreCase(date)) {
+                        Result.addPhoto(photo);
+                    }
+                }
+
+                photosAdapter.change();
+                shouldShowMenuDone();
+                processSecondMenu();
+            });
         }
     }
 

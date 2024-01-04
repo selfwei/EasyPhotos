@@ -49,4 +49,9 @@
     <color name="home_text">#FF97C2FF</color>
     <color name="dialog_cancel">#FF4E8DF6</color>
     <color name="white">#FFFFFFFF</color>
+
+
+    <color name="xpopup_bk_color">#d9071226</color>
+    <color name="xpopup_area_solid_color">#967FBEFF</color>
+    <color name="xpopup_separate_color">#367FBEFF</color>
 </resources>

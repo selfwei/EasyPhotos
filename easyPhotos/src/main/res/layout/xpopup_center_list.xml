@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="1000dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/xpopup_area_bg"
+    android:padding="20dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:minHeight="80dp"
+        android:textColor="@color/white"
+        android:textSize="26dp" />
+
+    <com.lxj.xpopup.widget.VerticalRecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="vertical"
+        android:overScrollMode="never" />
+</LinearLayout>
