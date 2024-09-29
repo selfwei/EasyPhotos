@@ -62,6 +62,8 @@ public class Setting {
     //上次选择的专辑名称
     public static String  albumName = null;
 
+    public static boolean openCameraDirect = false;
+
     @Retention(RetentionPolicy.SOURCE)
     @IntDef(value = {LIST_FIRST, BOTTOM_RIGHT})
     public @interface Location {

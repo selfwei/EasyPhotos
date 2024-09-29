@@ -220,6 +220,17 @@ public class AlbumBuilder {
         return AlbumBuilder.this;
     }
 
+    /**
+     * 直接打开相机
+     *
+     * @param openCameraDirect 相册直接打开相机 需要使用写true，不用写false。
+     * @return AlbumBuilder
+     */
+    public AlbumBuilder setOpenCamaraDirect(boolean openCameraDirect) {
+        Setting.openCameraDirect = openCameraDirect;
+        return AlbumBuilder.this;
+    }
+
 
     /**
      * 是否支持滑动

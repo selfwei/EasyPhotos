@@ -179,6 +179,10 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
         } else {
             permissionView.setVisibility(View.VISIBLE);
         }
+
+        if (Setting.openCameraDirect && Setting.isShowCamera) {
+            launchCamera(Code.REQUEST_CAMERA);
+        }
     }
 
     private void adaptationStatusBar() {
