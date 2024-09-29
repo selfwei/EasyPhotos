@@ -33,7 +33,7 @@ dependencies {
     // 弹窗提示
     implementation 'com.github.li-xiaojun:XPopup:2.7.6'
     // 屏幕适配
-    implementation 'me.jessyan:autosize:1.2.1'
+    implementation 'com.github.selfwei:AndroidAutoSize:1.2.1'
 }
 
 //// 指定编码
