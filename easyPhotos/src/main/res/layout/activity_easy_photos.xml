@@ -337,18 +337,23 @@
                 app:srcCompat="@drawable/ic_notifications_easy_photos" />
         </RelativeLayout>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <LinearLayout
             android:id="@+id/fab_camera"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:visibility="gone"
-            app:backgroundTint="@color/easy_photos_bar_primary_translation"
-            app:borderWidth="0dp"
-            app:elevation="1dp"
-            app:fabSize="normal"
+            android:layout_margin="20dp"
+            android:background="@drawable/circle_btn_bg"
             app:layout_constraintBottom_toTopOf="@+id/m_bottom_bar"
             app:layout_constraintRight_toRightOf="parent"
-            app:srcCompat="@drawable/ic_camera_easy_photos" />
+            android:gravity="center">
+
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:src="@drawable/icon_camera_max"
+                    />
+
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

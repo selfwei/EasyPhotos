@@ -113,7 +113,7 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
 
     private int currAlbumItemIndex = 0;
 
-    private ImageView ivCamera;
+    private LinearLayout ivCamera;
     private TextView tvTitle;
 
     private LinearLayout mSecondMenus;
